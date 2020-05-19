@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:g2hv1/assets/user_builder.dart';
 import 'package:g2hv1/constants.dart';
 import 'package:g2hv1/enums.dart';
-import 'package:g2hv1/assets/user.dart';
 import 'package:g2hv1/screens/add_new_order.dart';
+import 'package:g2hv1/screens/loading_screen.dart';
 import 'package:g2hv1/screens/order_details.dart';
 import 'package:g2hv1/screens/user_profile_setup_screen.dart';
-import 'package:g2hv1/widgets/app_text.dart';
 import 'package:g2hv1/widgets/common.dart';
+import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:g2hv1/widgets/order_details_card.dart';
@@ -18,8 +20,9 @@ import 'package:g2hv1/widgets/app_progress_dialog.dart';
 import 'package:g2hv1/assets/order.dart';
 import 'dart:developer' as logger;
 import 'package:intl/intl.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-enum SideMenu { profile, logout, about }
+enum SideMenu { profile, logout, about, language }
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -27,7 +30,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  User user;
   Future<List<SlidableOrderCard>> slidableCardsFuture;
   List<Order> orders;
   int _selectedIndex = 0;
@@ -36,13 +38,17 @@ class _HomeScreenState extends State<HomeScreen> {
     orders = [];
     AppProgressDialog progressDialog =
         AppProgressDialog(context: context, text: 'Loading..');
-    final userInfo = jsonDecode(await ds.readUserPref(key: 'user'));
-    final String request =
-        '{ "app-api-key": "$kAppApiKey", "request": { "mobile-number": "${userInfo['mobile-number']}", "order-status": $index, "user-type": "buyer" }}';
-    print(request);
+    final String request = '''
+        { 
+          "app-api-key": "$kAppApiKey", 
+          "request": { 
+            "mobile-number": "${UserController.to.user.mobileNumber}", 
+            "order-status": $index, "user-type": "buyer" 
+          }
+        }
+        ''';
     NetworkHelper nw = NetworkHelper();
     var response = await nw.postData(endpoint: '/order', data: request);
-    print(response);
     for (var order in response['orders']) {
       Order orderObj = Order.fromJson(order);
       orders.add(orderObj);
@@ -85,26 +91,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void listenOrderCardTapEven(int listIndex) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => OrderDetailsPage(
-                  order: orders[listIndex],
-                  user: user,
-                )));
-  }
-
-  void loadUser() async {
-    var json = jsonDecode(await ds.readUserPref(key: 'user'));
-    user = User.fromJson(json);
-    logger.log('User loaded async: $json');
+    Get.to(OrderDetailsPage(
+      order: orders[listIndex],
+    ));
   }
 
   @override
   void initState() {
     slidableCardsFuture = getSlidableOrderCards(0);
-    // TODO: Lazy load user. But this should be properly managed in case user is null then accessed
-    loadUser();
     super.initState();
   }
 
@@ -119,32 +113,63 @@ class _HomeScreenState extends State<HomeScreen> {
               //color: Colors.black,
               //size: 32,
             ),
-            onSelected: (SideMenu result) {
-              setState(() {
-                if (result == SideMenu.profile) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserProfileSetup(
-                        userUpdateMode: UserUpdateMode.Existing,
+            onSelected: (SideMenu result) async {
+              if (result == SideMenu.profile) {
+                Get.to(
+                  UserProfileSetup(
+                    userUpdateMode: UserUpdateMode.Existing,
+                  ),
+                );
+              } else if (result == SideMenu.logout) {
+                await ds.clearUserPref();
+                Get.off(LoadingScreen());
+              } else if (result == SideMenu.language) {
+                await Get.dialog(
+                  AlertDialog(
+                    title: Text('Select the preferred language'),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text('English'),
+                        onPressed: () async {
+                          context.locale = Locale('en', '');
+                          await ds.saveUserPref(
+                              key: 'appLanguage', value: 'en');
+                          logger.log('Language set: ${context.locale}');
+                          Phoenix.rebirth(context);
+                        },
                       ),
-                    ),
-                  );
-                }
-              });
+                      FlatButton(
+                        child: Text('සිංහල'),
+                        onPressed: () async {
+                          context.locale = Locale('si', '');
+                          await ds.saveUserPref(
+                              key: 'appLanguage', value: 'si');
+                          logger.log('Language set: ${context.locale}');
+                          Phoenix.rebirth(context);
+                        },
+                      )
+                    ],
+                  ),
+                  barrierDismissible: false,
+                );
+              }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<SideMenu>>[
-              const PopupMenuItem<SideMenu>(
+              PopupMenuItem<SideMenu>(
                 value: SideMenu.profile,
-                child: Text('User Profile'),
+                child: Text(kMenuTextUserProfile),
               ),
-              const PopupMenuItem<SideMenu>(
+              PopupMenuItem<SideMenu>(
                 value: SideMenu.about,
-                child: Text('About'),
+                child: Text(kMenuTextAbout),
               ),
-              const PopupMenuItem<SideMenu>(
+              PopupMenuItem<SideMenu>(
+                value: SideMenu.language,
+                child: Text('Language'),
+              ),
+              PopupMenuItem<SideMenu>(
                 value: SideMenu.logout,
-                child: Text('Logout'),
+                child: Text(kMenuTextLogout),
               ),
             ],
           )
@@ -154,11 +179,9 @@ class _HomeScreenState extends State<HomeScreen> {
           //size: 32,
           //color: Colors.grey[800],
         ),
-        title: const Text(
-          'Grocery2Home - Buyer',
-          //style: TextStyle(color: Colors.black),
+        title: Text(
+          kAppBarTextHomeScreen,
         ),
-        //backgroundColor: Colors.white,
       ),
       body: Scaffold(
         body: FutureBuilder(
@@ -232,15 +255,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: AppFloatingActionButton(
-        buttonText: 'New Order',
+        buttonText: kButtonTextNewOrder,
         buttonIcon: kIconDeliveredOrder,
         onPressed: () {
-          if (user != null) {
-            logger.log(
-                'Add new order page called for mobile number: ${user.mobileNumber} and city: ${user.userProfile.cities[0]}');
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AddNewOrder(user)));
-          }
+          Get.to(AddNewOrder(UserController.to.user));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

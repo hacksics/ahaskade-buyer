@@ -11,6 +11,7 @@ import 'package:g2hv1/screens/user_profile_setup_screen.dart';
 import 'package:get/get.dart';
 import '../services/data_store.dart' as ds;
 import 'dart:developer' as logger;
+import 'package:easy_localization/easy_localization.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -28,6 +29,38 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   void checkUserStatus() async {
     await loadConfigs();
+
+    var langPref = await ds.readUserPref(key: 'appLanguage');
+    if (langPref == "0") {
+      logger.log('language not set!');
+      await Get.dialog(
+        AlertDialog(
+          title: Text('Select the preferred language'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('English'),
+              onPressed: () {
+                context.locale = Locale('en', '');
+                ds.saveUserPref(key: 'appLanguage', value: 'en');
+                Get.offAll(LoadingScreen());
+              },
+            ),
+            FlatButton(
+              child: Text('සිංහල'),
+              onPressed: () {
+                context.locale = Locale('si', '');
+                ds.saveUserPref(key: 'appLanguage', value: 'si');
+                Get.offAll(LoadingScreen());
+              },
+            )
+          ],
+        ),
+        barrierDismissible: false,
+      );
+    } else {
+      logger.log('setting the language to $langPref');
+      context.locale = Locale('$langPref', '');
+    }
 
     var lastLoginDate = await ds.readUserPref(key: 'lastLoginDate');
     int sevenDaysAgoInSeconds =

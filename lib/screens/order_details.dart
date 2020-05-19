@@ -1,34 +1,26 @@
 import 'package:flutter/material.dart';
 import 'dart:developer' as logger;
-
 import 'package:g2hv1/assets/order.dart';
-import 'package:g2hv1/assets/user.dart';
+import 'package:g2hv1/assets/user_builder.dart';
 import 'package:g2hv1/screens/home_screen.dart';
 import 'package:g2hv1/widgets/app_progress_dialog.dart';
 import 'package:g2hv1/widgets/cards.dart';
-import 'package:line_icons/line_icons.dart';
-
-import '../constants.dart';
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailsPage extends StatefulWidget {
   final Order order;
-  final User user;
-  OrderDetailsPage({@required this.order, @required this.user});
+  OrderDetailsPage({@required this.order});
   @override
   _OrderDetailsPageState createState() => _OrderDetailsPageState();
 }
 
 class _OrderDetailsPageState extends State<OrderDetailsPage> {
   Order order;
-  User user;
   List<ItemDetailsCard> itemCardsList;
 
   @override
   void initState() {
     order = widget.order;
-    user = widget.user;
     itemCardsList = getItemCardsList();
     logger.log('Page init called for Order Details: ${order.orderId}');
     super.initState();
@@ -123,7 +115,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
           AppProgressDialog appProgressDialog =
               AppProgressDialog(text: 'Sending..', context: context);
           appProgressDialog.show();
-          await order.deleteOrder(user);
+          await order.deleteOrder(UserController.to.user);
           appProgressDialog.hide();
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => HomeScreen()));

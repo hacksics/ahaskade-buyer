@@ -3,6 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:g2hv1/assets/config_builder.dart';
 import 'package:g2hv1/common_functions.dart';
 import 'package:intl/intl.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 final kS3ImageBucketUrl = ConfigsController.to.s3BucketUrl;
 final kS3ImageBucket = ConfigsController.to.s3Bucket;
@@ -26,13 +27,13 @@ final Color kColorBackgroundWithOpacity =
     Colors.lightBlueAccent.withOpacity(0.05);
 
 // text for labels and buttons
-final String kButtonTextRequestCode = 'Request Code';
-final String kTextEnterYourMobile = 'Enter your mobile number to continue';
-final String kTextEnter4DigitCode = 'Enter the 4 dight code you recieved';
-final String kButtonTextOtpSubmit = 'Validate';
+final String kButtonTextRequestCode = 'Request Code'.tr();
+final String kTextEnterYourMobile = 'Enter your mobile number to continue'.tr();
+final String kTextEnter4DigitCode = 'Enter the 4 digit code you received'.tr();
+final String kButtonTextOtpSubmit = 'Validate'.tr();
 
 // app bar constants
-final kAppBarTextUserProfileSettings = 'User Profile Settings';
+final kAppBarTextUserProfileSettings = 'User Profile Settings'.tr();
 
 final Color kCardColor = Colors.black12;
 
@@ -80,21 +81,18 @@ const kIconCamera = FeatherIcons.camera;
 const kIconPhotos = FeatherIcons.image;
 
 // popup menu
-const String kMenuTextUserProfile = 'User Profile';
-const String kMenuTextAbout = 'About';
-const String kMenuTextLogout = 'Logout';
+final String kMenuTextUserProfile = 'My Profile'.tr();
+final String kMenuTextAbout = 'About'.tr();
+final String kMenuTextLogout = 'Logout'.tr();
 
 // home screen
-const String kAppBarTextHomeScreen = 'G2H Seller';
-const String kMainScreenButtonTextManageMyList = 'Manage my Shopping Lists';
-const String kNavBarTextOpenOrders = 'Open';
-const String kNavBarTextScheduledOrders = 'Sheduled';
-const String kNavBarTextCompletedOrders = 'Completed';
-const String kNavBarTextDeletedOrders = 'Archived';
-const String kButtonTextSchedule = 'Schedule for Delivery';
-const String kButtonTextDelivered = 'Mark as Delivered';
-const String kButtonTextDelete = 'Delete delivered orders';
-const String kHeaderTextNoOrders = 'No orders available currently';
-const String kHomeScreenHeaderTextSelectOrders = 'Select orders from the list';
-String kHeaderTextWithOrders({int total, int selected}) =>
-    'You have selected $selected out of $total';
+final String kAppBarTextHomeScreen = 'Ahaskade Buyer'.tr();
+final String kButtonTextNewOrder = 'New Order'.tr();
+final String kNavBarTextOpenOrders = 'New'.tr();
+final String kNavBarTextScheduledOrders = 'Scheduled'.tr();
+final String kNavBarTextCompletedOrders = 'Completed'.tr();
+final String kNavBarTextDeletedOrders = 'Archived'.tr();
+
+final String kUserProfileTextName = 'Name'.tr();
+final String kUserProfileCityName = 'City'.tr();
+final String kUserProfileButtonTextSave = 'SAVE'.tr();

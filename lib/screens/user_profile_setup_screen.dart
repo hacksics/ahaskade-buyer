@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:g2hv1/assets/user.dart';
+import 'package:g2hv1/assets/user_builder.dart';
 import 'package:g2hv1/screens/home_screen.dart';
 import 'package:g2hv1/services/network.dart';
 import 'package:g2hv1/widgets/animated_pin.dart';
 import 'package:g2hv1/widgets/app_button.dart';
 import 'package:g2hv1/widgets/app_progress_dialog.dart';
 import 'package:g2hv1/widgets/common.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:g2hv1/services/location.dart';
 import 'package:g2hv1/constants.dart';
@@ -72,6 +74,8 @@ class _UserProfileSetupState extends State<UserProfileSetup> {
           mobileNumber = user.mobileNumber;
           userNameTextEditController.text = user.userProfile.name;
           city = user.userProfile.cities[0];
+          if (user.userProfile.location.lat == 0.0)
+            return await getGpsLocation();
           _cameraPosition = CameraPosition(
             target: LatLng(
                 user.userProfile.location.lat, user.userProfile.location.lon),
@@ -84,6 +88,10 @@ class _UserProfileSetupState extends State<UserProfileSetup> {
         }
       }
     }
+    return await getGpsLocation();
+  }
+
+  Future<CameraPosition> getGpsLocation() async {
     Location lc = Location();
     await lc.getCurrentLocation();
     _cameraPosition = CameraPosition(
@@ -102,7 +110,7 @@ class _UserProfileSetupState extends State<UserProfileSetup> {
               Icons.arrow_back_ios,
             ),
             onTap: () {
-              Navigator.pop(context);
+              Get.back();
             },
           )
         : null;
@@ -131,16 +139,15 @@ class _UserProfileSetupState extends State<UserProfileSetup> {
 
     NetworkHelper nw = NetworkHelper();
     var response = await nw.putData(endpoint: '/user', data: request);
-    logger.log('Request Response: $response');
     User user = User.fromJson(response);
+    UserController.to.initUser(response);
     user.save();
     progressDialog.hide();
 
     // This ensures keyboard is retracted!
     FocusScope.of(context).unfocus();
 
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    Get.offAll(HomeScreen());
   }
 
   @override
@@ -200,7 +207,7 @@ class _UserProfileSetupState extends State<UserProfileSetup> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: AppIconButton(
-              buttonText: 'SAVE',
+              buttonText: kUserProfileButtonTextSave,
               buttonIcon: kIconSave,
               onPressed: () async {
                 saveUserProfile();
@@ -232,7 +239,8 @@ class _UserProfileSetupState extends State<UserProfileSetup> {
         ),
         Row(
           children: <Widget>[
-            Text('Name', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(kUserProfileTextName,
+                style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(
               width: 20.0,
             ),
@@ -244,7 +252,8 @@ class _UserProfileSetupState extends State<UserProfileSetup> {
         ),
         Row(
           children: <Widget>[
-            Text('City', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(kUserProfileCityName,
+                style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(
               width: 20.0,
             ),
@@ -300,12 +309,19 @@ class _UserProfileSetupState extends State<UserProfileSetup> {
   }
 
   Future<String> getCityFromCoordinates({double lat, double lon}) async {
-    final String request =
-        '{ "app-api-key": "$kAppApiKey", "request": { "mobile-number": "$mobileNumber", "lat": $lat, "lon": "$lon" }}';
+    final String request = '''
+        { 
+          "app-api-key": "$kAppApiKey", 
+          "request": { 
+            "mobile-number": "$mobileNumber", 
+            "lat": $lat, 
+            "lon": "$lon" 
+          }
+        }
+        ''';
     logger.log('City Name GET Request: $request');
     NetworkHelper nw = NetworkHelper();
     var response = await nw.postData(endpoint: '/geo/location', data: request);
-    logger.log('Response for City Name GET Request $response');
     return (response['city'] != null) ? response['city'] : null;
   }
 

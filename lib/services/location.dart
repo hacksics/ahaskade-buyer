@@ -1,3 +1,4 @@
+import 'package:g2hv1/common_functions.dart';
 import 'package:geolocator/geolocator.dart';
 
 class Location {
@@ -11,7 +12,10 @@ class Location {
       latitude = position.latitude;
       longitude = position.longitude;
     } catch (e) {
-      print(e);
+      showAlertDialog(
+          error: e,
+          errorDetails:
+              'Looks like application is unable to get the current location from your device!');
     }
   }
 }

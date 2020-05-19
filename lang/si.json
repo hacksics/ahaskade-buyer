@@ -1,0 +1,26 @@
+{
+  "Request Code": "තහවුරු කරන්න",
+  "Enter your mobile number to continue": "ඔබගේ ජංගම දුරකථන අංකය ඇතුළත් කරන්න",
+  "Phone Number": "දුරකථන අංකය",
+  "Enter the 4 digit code you received": "ඔබට දැන් ලැබුණු අංක 4 කේතය ඇතුළත් කරන්න",
+  "Validate": "ඇතුලත් කරන්න",
+  "Invalid PIN": "වැරදි PIN අංකය",
+  "You've entered incorrect PIN. Please check the SMS you've received and enter the correct PIN": "ඔබ වැරදි PIN එකක් ඇතුළත් කර ඇත. කරුණාකර ඔබට ලැබුණු කෙටි පණිවුඩය පරීක්ෂා කර නිවැරදි PIN අංකය ඇතුළත් කරන්න",
+  "Invalid Phone Number": "වැරදි දුරකථන අංකය",
+  "Looks like you've entered invalid phone number!": "ඔබ අවලංගු දුරකථන අංකයක් ඇතුළත් කළ බව පෙනේ!",
+  "Select orders from the list": "පහළ ඇණවුම් තෝරන්න",
+  "My Profile": "මගේ තොරතුරු",
+  "About": "අප ගැන",
+  "Logout": "ලොග්අවුට්",
+
+  "New Order": "අලුතින් එකක්",
+  "New": "අලුත්",
+  "Scheduled": "මග",
+  "Completed": "සම්පූර්ණයි",
+  "Archived": "අනවශ්\u200Dය",
+
+  "Name": "නම ",
+  "City": "නගරය",
+  "SAVE": "සුරකින්න",
+  "User Profile Settings": "මගේ තොරතුරු"
+}

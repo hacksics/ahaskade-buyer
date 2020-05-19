@@ -53,9 +53,9 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
   @override
   Widget build(BuildContext context) {
     String typedOtp;
+    print(otpCode);
     return MainScreenCanvas(
       children: <Widget>[
-        Text(otpCode.toString()),
         Text(
           kTextEnter4DigitCode,
         ),
