@@ -22,5 +22,10 @@
   "Name": "නම ",
   "City": "නගරය",
   "SAVE": "සුරකින්න",
-  "User Profile Settings": "මගේ තොරතුරු"
+  "User Profile Settings": "මගේ තොරතුරු",
+
+  "Showing sellers delivering to {city}": "{city} නගරයේ වෙළෙන්දන්",
+  "Select a Seller": "වෙළෙන්දා තෝරාගන්න",
+  "Name: {name}": "නම: {name}",
+  "Phone: {mobile}": "දුරකථන: {mobile}"
 }

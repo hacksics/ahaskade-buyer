@@ -289,8 +289,8 @@ class ShopCard extends StatelessWidget {
                       SizedBox(
                         height: 4.0,
                       ),
-                      Text('Name: ${seller.sellerName}'),
-                      Text('Mobile Number: ${seller.mobileNumber}'),
+                      Text(kTextShopCardSellerName(seller.sellerName)),
+                      Text(kTextShopCardSellerMobile(seller.mobileNumber)),
                     ],
                   ),
                 ),

@@ -35,6 +35,15 @@ final String kButtonTextOtpSubmit = 'Validate'.tr();
 // app bar constants
 final kAppBarTextUserProfileSettings = 'User Profile Settings'.tr();
 
+// add new order constants
+String kTextSellerHeaderText({String city}) =>
+    'Showing sellers delivering to {city}'.tr(namedArgs: {'city': city});
+final kAppBarTextSelectSeller = 'Select a Seller'.tr();
+String kTextShopCardSellerName(String name) =>
+    'Name: {name}'.tr(namedArgs: {'name': name});
+String kTextShopCardSellerMobile(String mobile) =>
+    'Phone: {mobile}'.tr(namedArgs: {'mobile': mobile});
+
 final Color kCardColor = Colors.black12;
 
 String formatDoubleToPrice(double price) {

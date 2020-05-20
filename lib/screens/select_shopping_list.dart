@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:g2hv1/assets/shopping_list.dart';
 import 'package:g2hv1/assets/user.dart';
+import 'package:g2hv1/assets/user_builder.dart';
 import 'package:g2hv1/screens/complete_order.dart';
 import 'package:g2hv1/widgets/app_progress_dialog.dart';
 import 'package:g2hv1/widgets/cards.dart';
@@ -12,8 +13,7 @@ import 'package:g2hv1/assets/seller.dart';
 
 class SelectShoppingList extends StatefulWidget {
   final Seller seller;
-  final User user;
-  SelectShoppingList({this.seller, this.user});
+  SelectShoppingList({@required this.seller});
   @override
   _SelectShoppingListState createState() => _SelectShoppingListState();
 }
@@ -55,7 +55,7 @@ class _SelectShoppingListState extends State<SelectShoppingList> {
   @override
   void initState() {
     seller = widget.seller;
-    user = widget.user;
+    user = UserController.to.user;
     logger.log(
         'select shopping list init with seller: ${seller.mobileNumber} and user: ${user.mobileNumber}');
     shoppingListCardListFuture = getShoppingListCardsList();

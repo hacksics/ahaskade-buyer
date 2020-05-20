@@ -258,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
         buttonText: kButtonTextNewOrder,
         buttonIcon: kIconDeliveredOrder,
         onPressed: () {
-          Get.to(AddNewOrder(UserController.to.user));
+          Get.to(AddNewOrder());
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
