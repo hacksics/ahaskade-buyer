@@ -58,6 +58,12 @@ String kTextItemsSelected({int total, int selected}) =>
     });
 final kTextSubmitOrder = 'Submit Order'.tr();
 
+// order details screen constants
+final kAppBarTextOrderDetails = 'Order Details'.tr();
+String kTextTotalItems({int total}) =>
+    'Items: {total}'.tr(namedArgs: {'total': total.toString()});
+final kTextCancel = 'CANCEL'.tr();
+
 final Color kCardColor = Colors.black12;
 
 String formatDoubleToPrice(double price) {

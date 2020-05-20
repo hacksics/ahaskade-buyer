@@ -34,5 +34,9 @@
   "Complete your Order": "ඔබේ ඇනවුම",
   "{selected} of {total} items selected": "වර්ග {total}න් {selected}ක් තෝරා ඇත",
   "Total Value: {total}": "මුළු ගාන {total}",
-  "Submit Order": "සම්පුර්න කරන්න"
+  "Submit Order": "සම්පුර්න කරන්න",
+
+  "Order Details": "ඕඩරේ විස්තර",
+  "Items: {total}": "කෑලි ගාන: {total}",
+  "CANCEL": "මකන්න"
 }

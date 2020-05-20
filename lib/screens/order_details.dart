@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:developer' as logger;
 import 'package:g2hv1/assets/order.dart';
 import 'package:g2hv1/assets/user_builder.dart';
+import 'package:g2hv1/constants.dart';
 import 'package:g2hv1/screens/home_screen.dart';
 import 'package:g2hv1/widgets/app_progress_dialog.dart';
 import 'package:g2hv1/widgets/cards.dart';
@@ -31,7 +32,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     String shopName = order.shopName == null ? 'Not Available' : order.shopName;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order Details'),
+        title: Text(kAppBarTextOrderDetails),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,10 +82,10 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                               ],
                             ),
                           ),
-                          OrderDetailsHeaderWidgetText(
-                              'Order Total: ${order.orderInfo.orderTotal}'),
-                          OrderDetailsHeaderWidgetText(
-                              'Items: ${order.orderInfo.items.length}'),
+                          OrderDetailsHeaderWidgetText(kTextTotalValue(
+                              formatDoubleToPrice(order.orderInfo.orderTotal))),
+                          OrderDetailsHeaderWidgetText(kTextTotalItems(
+                              total: order.orderInfo.items.length)),
                         ],
                       ),
                     ],
@@ -130,7 +131,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                 color: Colors.red,
               ),
               Text(
-                'CANCEL',
+                kTextCancel,
                 style: TextStyle(color: Colors.red),
               )
             ],
