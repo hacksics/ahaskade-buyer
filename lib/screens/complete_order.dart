@@ -7,6 +7,7 @@ import 'package:g2hv1/screens/home_screen.dart';
 import 'package:g2hv1/widgets/app_progress_dialog.dart';
 import 'package:g2hv1/widgets/cards.dart';
 import 'package:g2hv1/widgets/common.dart';
+import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'dart:developer' as logger;
@@ -48,28 +49,23 @@ class _CompleteOrderState extends State<CompleteOrder> {
     appProgressDialog.show();
     var requestBody =
         jsonEncode(shoppingList.getOrderRequest(user: user, seller: seller));
-    logger.log('request body for order submission: $requestBody');
     var request = '''
       {
         "app-api-key": "test-key",
         "request": $requestBody
       }
       ''';
-    logger.log('New order PUT Request: $request');
-
     NetworkHelper nw = NetworkHelper();
-    var response = await nw.putData(endpoint: '/order', data: request);
-    logger.log('Request Response: $response');
+    await nw.putData(endpoint: '/order', data: request);
     appProgressDialog.hide();
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    Get.offAll(HomeScreen());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Complete your Order'),
+        title: Text(kAppBarCompleteOrder),
       ),
       body: Column(
         children: <Widget>[
@@ -97,12 +93,15 @@ class _CompleteOrderState extends State<CompleteOrder> {
                       height: 5.0,
                     ),
                     Text(
-                      'Total Value: ${formatDoubleToPrice(listTotal)}',
+                      kTextTotalValue(formatDoubleToPrice(listTotal)),
                       style: TextStyle(
                           fontSize: 20.0, fontWeight: FontWeight.w500),
                     ),
                     Text(
-                        '${shoppingList.getSelectedItemsCount()} of ${shoppingList.shoppingListItems.length} items selected'),
+                      kTextItemsSelected(
+                          total: shoppingList.shoppingListItems.length,
+                          selected: shoppingList.getSelectedItemsCount()),
+                    ),
                   ],
                 ),
               ],
@@ -134,7 +133,7 @@ class _CompleteOrderState extends State<CompleteOrder> {
         ],
       ),
       floatingActionButton: AppFloatingActionButton(
-        buttonText: 'Submit Order',
+        buttonText: kTextSubmitOrder,
         buttonIcon: kIconSave,
         onPressed: () async {
           await submitOrder();

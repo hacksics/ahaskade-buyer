@@ -47,6 +47,17 @@ String kTextShopCardSellerMobile(String mobile) =>
 // select shopping list screen constants
 final kAppBarSelectShoppingList = 'Choose a Shopping List'.tr();
 
+// complete order screen constants
+final kAppBarCompleteOrder = 'Complete your Order'.tr();
+String kTextTotalValue(String total) =>
+    'Total Value: {total}'.tr(namedArgs: {'total': total});
+String kTextItemsSelected({int total, int selected}) =>
+    '{selected} of {total} items selected'.tr(namedArgs: {
+      'selected': selected.toString(),
+      'total': total.toString()
+    });
+final kTextSubmitOrder = 'Submit Order'.tr();
+
 final Color kCardColor = Colors.black12;
 
 String formatDoubleToPrice(double price) {

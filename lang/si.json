@@ -29,5 +29,10 @@
   "Name: {name}": "නම: {name}",
   "Phone: {mobile}": "දුරකථන: {mobile}",
 
-  "Choose a Shopping List": "බඩු ලැයිස්තුවක් තෝරන්න"
+  "Choose a Shopping List": "බඩු ලැයිස්තුවක් තෝරන්න",
+
+  "Complete your Order": "ඔබේ ඇනවුම",
+  "{selected} of {total} items selected": "වර්ග {total}න් {selected}ක් තෝරා ඇත",
+  "Total Value: {total}": "මුළු ගාන {total}",
+  "Submit Order": "සම්පුර්න කරන්න"
 }
