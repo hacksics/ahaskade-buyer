@@ -27,5 +27,7 @@
   "Showing sellers delivering to {city}": "{city} නගරයේ වෙළෙන්දන්",
   "Select a Seller": "වෙළෙන්දා තෝරාගන්න",
   "Name: {name}": "නම: {name}",
-  "Phone: {mobile}": "දුරකථන: {mobile}"
+  "Phone: {mobile}": "දුරකථන: {mobile}",
+
+  "Choose a Shopping List": "බඩු ලැයිස්තුවක් තෝරන්න"
 }

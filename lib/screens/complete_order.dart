@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:g2hv1/assets/user.dart';
+import 'package:g2hv1/assets/user_builder.dart';
 import 'package:g2hv1/screens/home_screen.dart';
 import 'package:g2hv1/widgets/app_progress_dialog.dart';
 import 'package:g2hv1/widgets/cards.dart';
@@ -18,9 +19,8 @@ import 'package:flutter_counter/flutter_counter.dart';
 
 class CompleteOrder extends StatefulWidget {
   final ShoppingList shoppingList;
-  final User user;
   final Seller seller;
-  CompleteOrder({this.shoppingList, this.user, this.seller});
+  CompleteOrder({@required this.shoppingList, @required this.seller});
   @override
   _CompleteOrderState createState() => _CompleteOrderState();
 }
@@ -33,7 +33,7 @@ class _CompleteOrderState extends State<CompleteOrder> {
 
   @override
   void initState() {
-    user = widget.user;
+    user = UserController.to.user;
     seller = widget.seller;
     shoppingList = widget.shoppingList;
     listTotal = shoppingList.getListTotal();

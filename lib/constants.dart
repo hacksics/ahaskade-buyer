@@ -44,6 +44,9 @@ String kTextShopCardSellerName(String name) =>
 String kTextShopCardSellerMobile(String mobile) =>
     'Phone: {mobile}'.tr(namedArgs: {'mobile': mobile});
 
+// select shopping list screen constants
+final kAppBarSelectShoppingList = 'Choose a Shopping List'.tr();
+
 final Color kCardColor = Colors.black12;
 
 String formatDoubleToPrice(double price) {

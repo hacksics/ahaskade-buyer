@@ -5,6 +5,7 @@ import 'package:g2hv1/assets/user_builder.dart';
 import 'package:g2hv1/screens/complete_order.dart';
 import 'package:g2hv1/widgets/app_progress_dialog.dart';
 import 'package:g2hv1/widgets/cards.dart';
+import 'package:get/get.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'dart:developer' as logger;
 import 'package:g2hv1/services/network.dart';
@@ -35,10 +36,8 @@ class _SelectShoppingListState extends State<SelectShoppingList> {
       }
     } 
     ''';
-    logger.log('Get Sellers POST request: $request');
     NetworkHelper nw = NetworkHelper();
     var response = await nw.postData(endpoint: '/seller/list', data: request);
-    logger.log('Get Sellers POST response: $response');
     for (var listsJson in response['shopping-lists']) {
       ShoppingList shoppingList = ShoppingList.fromJson(listsJson);
       shoppingListList.add(shoppingList);
@@ -66,7 +65,7 @@ class _SelectShoppingListState extends State<SelectShoppingList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Choose a Shopping List'),
+        title: Text(kAppBarSelectShoppingList),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +94,7 @@ class _SelectShoppingListState extends State<SelectShoppingList> {
                       height: 10.0,
                     ),
                     Text(
-                      'Seller: ${seller.sellerName}',
+                      kTextShopCardSellerName(seller.sellerName),
                       style: TextStyle(
                         fontSize: 18.0,
                       ),
@@ -103,7 +102,7 @@ class _SelectShoppingListState extends State<SelectShoppingList> {
                     SizedBox(
                       height: 6.0,
                     ),
-                    Text('Mobile: ${seller.mobileNumber}')
+                    Text(kTextShopCardSellerMobile(seller.mobileNumber))
                   ],
                 ),
               ],
@@ -151,14 +150,10 @@ class ShoppingListCard extends StatelessWidget {
       child: GestureDetector(
           onTap: () {
             logger.log('shopping list card clicked: ${shoppingList.listId}');
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CompleteOrder(
-                          user: user,
-                          shoppingList: shoppingList,
-                          seller: seller,
-                        )));
+            Get.to(CompleteOrder(
+              shoppingList: shoppingList,
+              seller: seller,
+            ));
           },
           child: ListCard(
             cardTitle: shoppingList.listId,
