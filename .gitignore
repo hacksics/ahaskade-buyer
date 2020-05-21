@@ -39,6 +39,7 @@ test.sh
 **/android/**/GeneratedPluginRegistrant.java
 **/android/app/src/main/AndroidManifest.xml
 **/android/app/google-services.json
+**/android/key.properties
 
 
 # iOS/XCode related

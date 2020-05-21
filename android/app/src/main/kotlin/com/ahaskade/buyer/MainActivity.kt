@@ -1,4 +1,4 @@
-package com.example.g2hv1
+package com.ahaskade.buyer
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
