@@ -145,7 +145,10 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   List<ItemDetailsCard> getItemCardsList() {
     List<ItemDetailsCard> cardsList = [];
     for (var item in order.orderInfo.items) {
-      cardsList.add(ItemDetailsCard(item));
+      cardsList.add(ItemDetailsCard(
+        listItem: item,
+        sellerMobileNumber: order.sellerMobileNo,
+      ));
     }
     return cardsList;
   }

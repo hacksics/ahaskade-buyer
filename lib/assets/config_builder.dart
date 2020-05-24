@@ -10,6 +10,7 @@ class ConfigsController extends GetController {
   String serviceKey;
   String apiGwKey;
   String googleMapsKey;
+  String appVersion;
   void setS3Credentials({String id, String key, String url, String bucket}) {
     s3BucketUrl = url;
     s3Bucket = bucket;
@@ -23,6 +24,11 @@ class ConfigsController extends GetController {
     apiGwKey = gwKey;
     serviceKey = serKey;
     googleMapsKey = mapsKey;
+    update(this);
+  }
+
+  void setAppSettings({String version}) {
+    appVersion = version;
     update(this);
   }
 }

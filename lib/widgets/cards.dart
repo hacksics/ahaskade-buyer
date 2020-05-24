@@ -10,7 +10,8 @@ import 'package:g2hv1/assets/user_builder.dart';
 
 class ItemDetailsCard extends StatelessWidget {
   final Item listItem;
-  ItemDetailsCard(this.listItem);
+  final String sellerMobileNumber;
+  ItemDetailsCard({this.listItem, this.sellerMobileNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +26,8 @@ class ItemDetailsCard extends StatelessWidget {
     ImageProvider imageProvider;
 
     if (listItem.image != null) {
-      String mobileNumberPrefix = UserController.to.user.mobileNumber
-          .replaceAll(new RegExp(r'[^\w\s]+'), '');
+      String mobileNumberPrefix =
+          sellerMobileNumber.replaceAll(new RegExp(r'[^\w\s]+'), '');
       imageProvider = NetworkImage(
           '$kS3ImageBucketUrl/$mobileNumberPrefix/${listItem.image}');
     } else {
@@ -93,20 +94,22 @@ class ItemCard extends StatelessWidget {
   final Function onCheckBoxChanged;
   final ShoppingListItem shoppingListItem;
   final cardIndex;
+  final String sellerMobileNumber;
 
   ItemCard(
       {this.onChanged,
       this.shoppingListItem,
       this.cardIndex,
-      this.onCheckBoxChanged});
+      this.onCheckBoxChanged,
+      this.sellerMobileNumber});
 
   @override
   Widget build(BuildContext context) {
     ImageProvider imageProvider;
 
     if (shoppingListItem.image != null) {
-      String mobileNumberPrefix = UserController.to.user.mobileNumber
-          .replaceAll(new RegExp(r'[^\w\s]+'), '');
+      String mobileNumberPrefix =
+          sellerMobileNumber.replaceAll(new RegExp(r'[^\w\s]+'), '');
       imageProvider = NetworkImage(
           '$kS3ImageBucketUrl/$mobileNumberPrefix/${shoppingListItem.image}');
     } else {

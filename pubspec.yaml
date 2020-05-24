@@ -47,6 +47,8 @@ dependencies:
   get: 2.0.3
   uuid: ^2.0.4
   flutter_feather_icons: ^1.0.3
+  enum_to_string: ^1.0.9
+  location: ^3.0.0
 
   # firebase
   firebase_core: ^0.4.0+9
@@ -55,6 +57,10 @@ dependencies:
   # lang support
   easy_localization: ^2.3.2
   flutter_phoenix: ^0.1.0
+
+  # automatic update
+  package_info: ^0.4.0+18
+  store_redirect: ^1.0.2
 
 
 dev_dependencies:

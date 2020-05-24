@@ -37,6 +37,7 @@ Future<void> loadConfigs() async {
       serKey: '',
       mapsKey: '',
     );
+    ConfigsController.to.setAppSettings(version: '');
   }
 }
 
@@ -68,8 +69,10 @@ Future<void> loadFirebaseRemoteConfigs() async {
       serKey: remoteConfig.getString('dev_app_key'),
       mapsKey: '',
     );
+    ConfigsController.to.setAppSettings(
+        version: remoteConfig.getString('dev_force_update_version'));
   } catch (e) {
-    logger.log('firebase config failre! $e');
+    logger.log('firebase config failure! $e');
     showAlertDialog(
         error: e.toString(),
         errorDetails:

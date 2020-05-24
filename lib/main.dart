@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:g2hv1/constants.dart';
+import 'package:g2hv1/screens/crash_screen.dart';
 import 'package:g2hv1/screens/loading_screen.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +25,10 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     SharedPreferences.getInstance();
     return GetMaterialApp(
+      builder: (BuildContext context, Widget widget) {
+        setErrorBuilder(context);
+        return widget;
+      },
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,

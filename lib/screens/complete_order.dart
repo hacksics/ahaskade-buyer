@@ -112,6 +112,7 @@ class _CompleteOrderState extends State<CompleteOrder> {
               itemCount: shoppingList.shoppingListItems.length,
               itemBuilder: (context, index) {
                 ItemCard itemCard = ItemCard(
+                    sellerMobileNumber: seller.mobileNumber,
                     cardIndex: index,
                     shoppingListItem: shoppingList.shoppingListItems[index],
                     onChanged: (value) {

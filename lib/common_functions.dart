@@ -80,10 +80,6 @@ Future<void> showSimpleAlertDialog(
           SizedBox(
             height: 5.0,
           ),
-          Text(
-            'Details:',
-            style: TextStyle(fontSize: 14.0, fontStyle: FontStyle.italic),
-          ),
         ],
       ),
       actions: <Widget>[

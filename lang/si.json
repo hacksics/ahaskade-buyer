@@ -38,5 +38,7 @@
 
   "Order Details": "ඕඩරේ විස්තර",
   "Items: {total}": "කෑලි ගාන: {total}",
-  "CANCEL": "මකන්න"
+  "CANCEL": "මකන්න",
+
+  "App encountered an unrecoverable error!": "ඇප් එක වැඩ කරන්නේ නෑ. ආපහු ස්ටාර්ට් කරන්න"
 }

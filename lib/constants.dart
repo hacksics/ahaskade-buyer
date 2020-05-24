@@ -125,3 +125,7 @@ final String kNavBarTextDeletedOrders = 'Archived'.tr();
 final String kUserProfileTextName = 'Name'.tr();
 final String kUserProfileCityName = 'City'.tr();
 final String kUserProfileButtonTextSave = 'SAVE'.tr();
+
+// Crash Screen
+final String kTextCrashScreenTitle =
+    'App encountered an unrecoverable error!'.tr();

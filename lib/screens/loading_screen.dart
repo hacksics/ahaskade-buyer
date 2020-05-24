@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:g2hv1/assets/config_loader.dart';
 import 'package:g2hv1/enums.dart';
@@ -8,6 +9,8 @@ import 'package:g2hv1/assets/user_builder.dart';
 import 'package:g2hv1/screens/home_screen.dart';
 import 'package:g2hv1/screens/login_screen_mobile_no.dart';
 import 'package:g2hv1/screens/user_profile_setup_screen.dart';
+import 'package:g2hv1/services/location.dart';
+import 'package:g2hv1/services/upgrade_manager.dart';
 import 'package:get/get.dart';
 import '../services/data_store.dart' as ds;
 import 'dart:developer' as logger;
@@ -28,7 +31,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void checkUserStatus() async {
+    await checkLocationPermission();
+
     await loadConfigs();
+
+    await checkUpdateAvailable();
 
     var langPref = await ds.readUserPref(key: 'appLanguage');
     if (langPref == "0") {
@@ -71,8 +78,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
       logger.log('user is not found, launching the registration');
       Get.offAll(MobileNumberInputScreen());
     } else {
-      UserController.to
-          .initUser(jsonDecode(await ds.readUserPref(key: 'user')));
+      try {
+        UserController.to
+            .initUser(jsonDecode(await ds.readUserPref(key: 'user')));
+      } catch (e) {
+        await ds.clearUserPref();
+        Phoenix.rebirth(context);
+      }
       Get.offAll(HomeScreen());
     }
   }

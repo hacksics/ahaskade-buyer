@@ -77,3 +77,8 @@ test.sh
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
+# release build scripts
+lib/assets/config_loader_prod.dart
+lib/assets/config_loader_dev.dart
+releaseBuild.sh
+

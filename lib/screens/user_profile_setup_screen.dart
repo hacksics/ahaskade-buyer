@@ -43,7 +43,7 @@ class _UserProfileSetupState extends State<UserProfileSetup> {
   var userNameTextEditController = TextEditingController();
 
   CameraPosition cameraPosition;
-  Location location = Location();
+  DeviceLocation location = DeviceLocation();
   Completer<GoogleMapController> _googleMapController = Completer();
 
   @override
@@ -92,7 +92,7 @@ class _UserProfileSetupState extends State<UserProfileSetup> {
   }
 
   Future<CameraPosition> getGpsLocation() async {
-    Location lc = Location();
+    DeviceLocation lc = DeviceLocation();
     await lc.getCurrentLocation();
     _cameraPosition = CameraPosition(
       target: LatLng(lc.latitude, lc.longitude),
